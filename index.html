@@ -38,7 +38,7 @@
       canvas.addEventListener('mousemove',
         function(evt){
           var mousePos = mousePosition(evt);
-          paddle1Y = mousePos.y;
+          paddle1Y = mousePos.y-(paddleHeigth/2);
         }
       )
     }
@@ -51,7 +51,7 @@
       colorRect(0,0, canvas.width, canvas.height, "black");
 
       //white paddle not done yet
-      colorRect(0, paddle1Y, 10, 100, "white");
+      colorRect(0, paddle1Y, 10, paddleHeigth, "white");
 
       //the moving ball
       colorCircle(ballX, ballY, 10, "white");
