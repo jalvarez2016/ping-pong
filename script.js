@@ -142,7 +142,7 @@ function score(score1, score2){
   ctx.fillStyle = "white"
 
   ctx.font = "30px Arial";
-  ctx.fillText(score1, canvas.width/4, canvas.height/4);
+  ctx.fillText(score1, canvas.width/5, canvas.height/4);
 
   ctx.font = "30px Arial";
   ctx.fillText(score2, canvas.width/4 * 3, canvas.height/4 );
