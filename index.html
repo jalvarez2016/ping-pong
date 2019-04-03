@@ -1,9 +1,56 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Pong Js Game</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Ping Pong</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <canvas id="gameCanvas" width="800px" height="600px"></canvas>
+    <div class="side-bar">
+      <div class="side-score">
+        <div class="side-title">
+          <p>You Have</p>
+        </div>
+        <div class="side-title" id="score">0 wins</div>
+        <div class="side-title" id="btc">0 btc</div>
+      </div>
+      <div>
+        <div class="side-title">
+          <p>Available Powerups For this game include</p>
+        </div>
+        <div id="powerUps">
+          <img src="coin.png"/>
+        </div>
+
+        <hr class="white-hr">
+
+        <div class="power-des">
+          <div>
+            <p>
+              <img class="coin-pow" src="coin.png"/>
+              This costs 3 BTC
+              <br>
+              This powerup cuts the computers score in half and rounds down if per chance it turns out to be an odd number.
+            </p>
+            <p>
+              <img class="coin-pow" src="coin.png"/>
+              This costs 2 BTC
+              <br>
+              This powerup makes the computers paddle smaller (yes that's what it is). In my opinion it sounds better than it is.
+            </p>
+            <p>
+              <img class="coin-pow" src="coin.png"/>
+              This costs 4 BTC
+              <br>
+              This powerup make the computer slower for the rest of the round (very overpowered).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>

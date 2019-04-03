@@ -1,0 +1,42 @@
+#gameCanvas{
+  border-radius: 5px;
+  float: left;
+}
+
+.side-bar{
+  float: left;
+  padding: 30px;
+  background: linear-gradient(to right bottom, #ff9966, #ff5e62);
+  border: 5px solid;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.side-title{
+  color: white;
+  text-align: center;
+  padding: 3px;
+}
+
+.side-score{
+  text-align: left;
+}
+
+#powerUps{
+  align-items: center;
+}
+
+.coin-pow{
+  margin-left: 30px;
+  padding-right: 5px;
+}
+
+.power-des{
+  padding: 50px;
+  color: white;
+}
+
+.white-hr{
+  width: 80%;
+  color: white;
+}
