@@ -24,7 +24,13 @@
 }
 
 #powerUps{
+  text-align: center;
+  margin: auto;
   align-items: center;
+}
+
+.powPad{
+  padding: 20px;
 }
 
 .coin-pow{
