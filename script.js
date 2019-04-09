@@ -46,6 +46,7 @@ var ballY = canvas.height/2;
 var ballSpeedY = 5;
 
 var showWinScreen = false;
+var startScreen = true;
 
 const winningScore = 8;
 
@@ -56,10 +57,10 @@ window.onload = function() {
   setInterval(function(){
 
     drawEverything();
-    console.log(btcGotten);
 
    }, 1000/framePerSecond);
 
+   canvas.addEventListener("mousedown", startGame);
    canvas.addEventListener("mousedown", handleMouseClick);
    canvas.addEventListener("mousedown", reducePoints);
    canvas.addEventListener("mousedown", reduceSize);
@@ -72,6 +73,10 @@ window.onload = function() {
    )
 };
 
+function startGame(evt){
+  startScreen = false;
+}
+
 function reducePoints(evt){
   var rect = canvas.getBoundingClientRect();
   var root = document.documentElement;
@@ -79,7 +84,6 @@ function reducePoints(evt){
   var mouseY = evt.clientY - rect.top -root.scrollTop;
   if( mouseX >= powReduceX && mouseX <= (powReduceX + powReduceWidth) ){
     if(mouseY >= powReduceX && mouseY <= (powReduceY + powReduceHeight)) {
-      console.log("hi");
       if(btcGotten >= powReduce){
         btcGotten -= powReduce;
         $("#btc").html(btcGotten + " btc");
@@ -98,7 +102,6 @@ function reduceSize(evt){
   var mouseY = evt.clientY - rect.top -root.scrollTop;
   if( mouseX >= powSmallX && mouseX <= (powSmallX + powSmallWidth) ){
     if(mouseY >= powSmallX && mouseY <= (powSmallY + powSmallHeight)) {
-      console.log("hi");
       if(btcGotten >= powSmall){
         btcGotten -= powSmall;
         $("#btc").html(btcGotten + " btc");
@@ -116,7 +119,6 @@ function reduceSpeed(evt){
   var mouseY = evt.clientY - rect.top -root.scrollTop;
   if( mouseX >= powSpeedX && mouseX <= (powSpeedX + powSpeedWidth) ){
     if(mouseY >= powSpeedX && mouseY <= (powSpeedY + powSpeedHeight)) {
-      console.log("hi");
       if(btcGotten >= powSpeed){
         btcGotten -= powSpeed;
         $("#btc").html(btcGotten + " btc");
@@ -126,6 +128,8 @@ function reduceSpeed(evt){
 
   }
 }
+
+
 
 //gets mouse position
 
@@ -146,23 +150,36 @@ function mousePosition(evt){
 
 function drawEverything(){
   drawRect(0, 0, canvas.width, canvas.height, "black");
-  if(showWinScreen){
-    win();
-    return;
+  if(startScreen){
+    beginGame();
+  } else {
+    if(showWinScreen){
+      win();
+      return;
+    }
+    if(dropBTC){
+      drawBTC();
+    }
+    score(youScore, compScore);
+    coins();
+    drawNet();
+    drawPaddle();
+    drawReducePow();
+    drawSmallPow();
+    drawSpeedPow();
+    moveBall();
+    draw2Paddle();
+    resetBall();
   }
-  if(dropBTC){
-    drawBTC();
-  }
-  score(youScore, compScore);
-  coins();
-  drawNet();
-  drawPaddle();
-  drawReducePow();
-  drawSmallPow();
-  drawSpeedPow();
-  moveBall();
-  draw2Paddle();
-  resetBall();
+}
+
+//begin game
+function beginGame(){
+  drawRect(canvas.width/2 - 200, canvas.height/2 - 60, 480, 100, "silver");
+  drawRect(canvas.width/2 - 220, canvas.height/2 - 80, 480, 100, "grey");
+  ctx.fillStyle = "white"
+  ctx.font = "80px Arial";
+  ctx.fillText("Click to start", canvas.width/2 - 200, canvas.height/2);
 }
 
 //draw net
@@ -189,12 +206,12 @@ function drawReducePow(){
 function drawSmallPow(){
   if(powSmall <= btcGotten){
     drawRect(powSmallX, powSmallY, powSmallWidth, powSmallHeight, "#11890d");
-    base_image.src = 'coin.png';
+    base_image.src = 'CoinPowersRed.png';
     ctx.drawImage(base_image, powSmallX + 12.5, powSmallY + 10);
   } else {
     drawRect(powSmallX, powSmallY, powSmallWidth, powSmallHeight, "#bf251e");
     base_image = new Image();
-    base_image.src = 'coin.png';
+    base_image.src = 'CoinPowersRed.png';
     ctx.drawImage(base_image, powSmallX + 12.5, powSmallY + 10);
   }
 }
@@ -202,15 +219,16 @@ function drawSmallPow(){
 function drawSpeedPow(){
   if(powSpeed <= btcGotten){
     drawRect(powSpeedX, powSpeedY, powSpeedWidth, powSpeedHeight, "#11890d");
-    base_image.src = 'coin.png';
+    base_image.src = 'CoinPowersCold.png';
     ctx.drawImage(base_image, powSpeedX + 12.5, powSpeedY + 10);
   } else {
     drawRect(powSpeedX, powSpeedY, powSpeedWidth, powSpeedHeight, "#bf251e");
     base_image = new Image();
-    base_image.src = 'coin.png';
+    base_image.src = 'CoinPowersCold.png';
     ctx.drawImage(base_image, powSpeedX + 12.5, powSpeedY + 10);
   }
 }
+
 
 function win(){
   ctx.fillStyle = "white"
@@ -295,8 +313,10 @@ function draw2Paddle(){
 
 function movePaddle2(){
   var paddle2Center = paddle2Y + (paddle2Height/2);
-  if(paddle2Center <= ballY && (paddle2Y + paddle2Height) <= canvas.height) {
+  if( paddle2Center < ballY && (paddle2Y + paddle2Height) < canvas.height) {
     paddle2Y += paddle2Speed;
+  } else if( paddle2Center > ballY && (paddle2Y + paddle2Height) < canvas.height) {
+    paddle2Y -= paddle2Speed;
   } else {
     paddle2Y -= paddle2Speed;
   }
